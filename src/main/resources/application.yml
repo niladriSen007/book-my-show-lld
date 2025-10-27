@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: book-my-show
+  datasource:
+    url: jdbc:postgresql://bms-database:5432/bms_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect

@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  bms-database:
+    image: postgres:18
+    container_name: bms-database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bms_db
+    volumes:
+      - bms-db-data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - bms-network
+  bms-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bms-service
+    ports:
+      - "8080:8080"
+    networks:
+      - bms-network
+    working_dir: /app
+    environment:
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      # Polling-based restart like chokidar/watchpack (interval and quiet period)
+      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: "2s"
+      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: "1s"
+      # Watch extra non-classpath paths (so template/resource edits reload without a Build)
+      SPRING_DEVTOOLS_RESTART_ADDITIONAL_PATHS: "src/main/resources"
+      # Optional: use a trigger file for manual restarts in slow filesystems (uncomment next line and touch the file to restart)
+      # SPRING_DEVTOOLS_RESTART_TRIGGER_FILE: ".reloadtrigger"
+    depends_on:
+      bms-database:
+        condition: service_healthy
+
+volumes:
+  bms-db-data:
+networks:
+  bms-network:
+    driver: bridge
