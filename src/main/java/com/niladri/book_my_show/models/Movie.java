@@ -15,6 +15,7 @@ import java.util.List;
 public class Movie extends BaseModel {
 
     private String name;
+    private String poster;
 
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;
