@@ -19,7 +19,7 @@ public class Theater extends BaseModel {
     private String address; //addition sanket
 
     @ManyToOne
-    @JoinColumn(name = "theaters")
+    @JoinColumn(name = "city")
     private City city;
 
     @OneToMany(mappedBy = "theater")

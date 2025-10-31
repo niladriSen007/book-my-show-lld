@@ -18,7 +18,7 @@ import java.util.List;
 public class Show extends BaseModel {
 
     @ManyToOne
-    @JoinColumn(name = "shows")
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     private LocalDateTime startTime; //addition sanket
